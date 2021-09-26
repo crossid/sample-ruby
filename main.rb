@@ -100,12 +100,12 @@ class Protected < Sinatra::Base
     end
   end
 
-  def hasAnyOfScopes(scopes)
+  def has_any_of_scopes?(scopes)
     @access_token["scp"].any? { |scope| scopes.include? scope }
   end
 
   get "/" do
-    unless hasAnyOfScopes(["openid"])
+    unless has_any_of_scopes?(["openid"])
       halt 403, "Missing scopes"
     end
     
