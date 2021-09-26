@@ -55,13 +55,16 @@ get '/callback' do
   end
 
   client.authorization_code = params['code']
-  access_token = client.access_token!
-  id_token = OpenIDConnect::ResponseObject::IdToken.decode access_token.id_token, discovery.jwks
+  @access_token = client.access_token!
+  @id_token = OpenIDConnect::ResponseObject::IdToken.decode @access_token.id_token, discovery.jwks
 
-  id_token.verify!({:nonce => session["nonce"], :issuer => ENV['ISSUER_BASE_URL'], :client_id => ENV['CLIENT_ID'] })  
-  user_info = access_token.userinfo!
-  return 200, {'Content-Type' => 'text/plain'}, "Hello " + user_info.name + ", your access token is: " + access_token.to_s
+  @id_token.verify!({:nonce => session["nonce"], :issuer => ENV['ISSUER_BASE_URL'], :client_id => ENV['CLIENT_ID'] })  
+  @user_info = @access_token.userinfo!
+  
+  @logout_url = discovery.end_session_endpoint + "?id_token_hint=" +  @access_token.id_token.to_s + "&post_logout_redirect_uri=https://localhost"
 
+  erb :post_login
+  
 end
 
 class Protected < Sinatra::Base
