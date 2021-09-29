@@ -71,11 +71,7 @@ class Login < Sinatra::Base
 end
 
 class Protected < Sinatra::Base
-
-  def initialize()
-    super()
-    @client, @discovery = init_client
-  end
+  @@client, @@discovery = init_client
 
   before do
     unless !request.env['HTTP_AUTHORIZATION'].blank? and "Bearer ".in? request.env['HTTP_AUTHORIZATION']
@@ -85,7 +81,7 @@ class Protected < Sinatra::Base
     token = request.env['HTTP_AUTHORIZATION']
     token["Bearer "] = ""
 
-    @access_token = JSON::JWT.decode(token, @discovery.jwks)
+    @access_token = JSON::JWT.decode(token, @@discovery.jwks)
 
     if @access_token["exp"].to_i < Time.now.to_i
       halt 401, "token expired"
