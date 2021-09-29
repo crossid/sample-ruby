@@ -75,13 +75,17 @@ class Protected < Sinatra::Base
 
   before do
     unless !request.env['HTTP_AUTHORIZATION'].blank? and "Bearer ".in? request.env['HTTP_AUTHORIZATION']
-      halt 401, "Access denied, missing token."
+      halt 401, "missing token."
     end
 
     token = request.env['HTTP_AUTHORIZATION']
     token["Bearer "] = ""
 
-    @access_token = JSON::JWT.decode(token, @@discovery.jwks)
+    begin
+      @access_token = JSON::JWT.decode(token, @@discovery.jwks)
+    rescue => exception
+      halt 401, "bad token"
+    end
 
     if @access_token["exp"].to_i < Time.now.to_i
       halt 401, "token expired"
