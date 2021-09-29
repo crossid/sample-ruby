@@ -1,7 +1,9 @@
 # Readme
 
-CLIENT_ID=<client id>\
-CLIENT_SECRET=<client secret> \
+```bash
+CLIENT_ID=<client_id>\
+CLIENT_SECRET=<client_secret> \
 REDIRECT_URI=https://localhost/callback \
-ISSUER_BASE_URL=https://<tenant id>.crossid.io/oauth2/ \
+ISSUER_BASE_URL=https://<tenant_id>.crossid.io/oauth2/ \
 rackup
+```
