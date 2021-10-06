@@ -48,9 +48,11 @@ class Login < Sinatra::Base
       halt 400,  {'Content-Type' => 'text/plain'}, 'missing code'
     end
 
-    if params['state'].blank? or params['state'] != session['state']
+    if params['state'].blank? or session['state'].blank? or params['state'] != session['state']
       halt 400,  {'Content-Type' => 'text/plain'}, 'bad or mismatching state'
     end
+    session.delete('state')
+
 
     if session['nonce'].blank?
       halt 400,  {'Content-Type' => 'text/plain'}, 'missing nonce'
