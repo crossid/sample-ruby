@@ -65,7 +65,8 @@ class Login < Sinatra::Base
     @id_token.verify!({:nonce => session["nonce"], :issuer => ENV['ISSUER_BASE_URL'], :client_id => ENV['CLIENT_ID'] })  
     @user_info = @access_token.userinfo!
     
-    @logout_url = @discovery.end_session_endpoint + "?id_token_hint=" +  @access_token.id_token.to_s + "&post_logout_redirect_uri=https://localhost"
+    @logout_redirect_url = ENV['REDIRECT_URI'].gsub("/callback", "")
+    @logout_url = @discovery.end_session_endpoint + "?id_token_hint=" +  @access_token.id_token.to_s + "&post_logout_redirect_uri=" + @logout_redirect_url
 
     erb :post_login
     
