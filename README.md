@@ -29,7 +29,7 @@ rackup
 
 Click this button to deploy the app to the DigitalOcean App Platform.
 
-[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/crossid/sample-flask/tree/main)
+[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/crossid/sample-ruby/tree/main)
 
 Note: when creating the web app, put a temporary URLs in _Redirect URI_ and _Logout URI_ until the app is deployed.
 
