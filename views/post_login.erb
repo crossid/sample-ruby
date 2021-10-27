@@ -1,7 +1,13 @@
 <html>
 <body>
-Hello <%= @user_info.name %> <br/>
-Your access token is <%= @access_token.to_s %> <br/>
+Hello <%= @user_info.name %> <br/><br/>
+Your access token is <%= @access_token.to_s %> <br/><br/>
+Try to consume  protected resource by:<br/><br/>
+<code style="background-color: gainsboro">
+  export TOKEN=token...
+  <br />
+  curl -H "Authorization: Bearer $TOKEN" {public_url}/protected
+</code><br/><br/>
 <button><a href="<%= @logout_url %>">Logout</a></button>
 </body>
 </html>
